@@ -1,0 +1,254 @@
+@domain=http://localhost:3000
+//@domain=https://g3tools-api.herokuapp.com
+//@accessToken = {{login.response.body.auth.accessToken}}
+
+###
+// Default route
+# @name default
+GET {{domain}}/
+
+###
+// Product Fees route: Test with empty body (no items)
+POST {{domain}}/product-fees
+
+###
+// Product Fees by single ASIN route
+POST {{domain}}/product-fees/asin
+Content-Type: application/json
+
+{ 
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 22.00,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0.00,
+    "ShippingCurrencyCode": "USD",
+   "Identifier": "B08C78Q6CB"
+}
+
+###
+// Product Fees by single SKU route
+POST {{domain}}/product-fees/sku
+Content-Type: application/json
+
+{ 
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 22.00,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0.00,
+    "ShippingCurrencyCode": "USD",
+   "Identifier": "UAR_1355915-585-XS"
+}
+
+###
+// Create test data
+# POST {{domain}}/product-fees/test-data
+
+###
+// Product Fees by list of 20 route
+POST {{domain}}/product-fees
+Content-Type: application/json
+
+[
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 43.22,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07YT5Q51Y",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 44.45,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07RFYZWLK",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 53.79,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07BHVV7NQ",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 30.14,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07G3H118Z",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 34.21,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07BKQ2XC3",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 25.61,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07FLNTGLK",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 21.43,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07BHW2QHX",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 17.61,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B08FCV3XY7",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 45.33,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B01MTXZ7AI",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 78.98,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07T27HVMN",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 94.9,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B072KSL4N2",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 38.47,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B071FBH7GQ",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 10.24,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07235Y6FH",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 24.99,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B015K64X4C",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 39.35,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B00VF33E7M",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 74.32,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B0815V6L2K",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 72.98,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B0815RH1GS",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 49.93,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07TS8MM7V",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 43.15,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07TGX1J8Y",
+    "IdType": "ASIN"
+  },
+  {
+    "MarketplaceId": "ATVPDKIKX0DER",
+    "IsAmazonFulfilled": true,
+    "ListingPrice": 61.94,
+    "ListingPriceCurrencyCode": "USD",
+    "Shipping": 0,
+    "ShippingCurrencyCode": "USD",
+    "Identifier": "B07MKRRMFS",
+    "IdType": "ASIN"
+  }
+]
