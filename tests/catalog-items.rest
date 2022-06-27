@@ -1,0 +1,97 @@
+@domain=http://localhost:3000
+//@domain=https://g3tools-api.herokuapp.com
+//@accessToken = {{login.response.body.auth.accessToken}}
+@nextToken = {{nextTokenTest.response.body.response.pagination.nextToken}}
+
+###
+// Default route
+# @name default
+GET {{domain}}/
+
+###
+// Catalog Items route: Test with empty body (no items)
+POST {{domain}}/catalog-items
+
+###
+// Catalog items info by keywords
+# @name nextTokenTest
+POST {{domain}}/catalog-items/keyword
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+   "keywords": "adidas, sport",
+   "includedData": "images"
+   
+}
+
+###
+// Catalog items info by keywords with next token
+# @name nextTokenTest
+POST {{domain}}/catalog-items/keyword
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+   "keywords": "adidas, sport",
+   "includedData": "images",
+   "nextToken": "{{nextToken}}"  
+}
+
+// B000S5XO8C to B09D8XGCD8
+// B00B80EO0I to B09X2D15JT
+// B08W2PLJXZ to B08VW9C6DW
+
+###
+// Catalog items info by brand names
+# @name nextTokenTest
+POST {{domain}}/catalog-items/brand-name
+Content-Type: application/json
+
+{ 
+   "store": "AZN-LAP",
+   "brandNames": "Dingo, Next, Dockers",
+   "keywords": "slacks",
+   "includedData": "summaries"
+   
+}
+
+###
+// Catalog items info by list of asins
+POST {{domain}}/catalog-items/asin
+Content-Type: application/json
+
+{ 
+   "store": "AZN-LAP",
+   "ids": ["B07BHVV7NQ", "B07G3H118Z", "B07BKQ2XC3", "B07FLNTGLK", "B07BHW2QHX", 
+   "B08FCV3XY7", "B01MTXZ7AI", "B07T27HVMN", "B072KSL4N2", "B071FBH7GQ", "B07235Y6FH", "B015K64X4C", "B00VF33E7M",
+    "B0815V6L2K", "B0815RH1GS", "B07TS8MM7V", "B07TGX1J8Y", "B07MKRRMFS", "B07MNZXL7T", "B075RSKC9Y"],
+   "includedData": ""
+   
+}
+
+###
+// Catalog items info by list of upcs
+POST {{domain}}/catalog-items/upc
+Content-Type: application/json
+
+{ 
+   "store": "AZN-LAP",
+   "ids": ["889309750256", "889309709827", "889309499896", "889309499889", "889309474473", "889309024760", "889308868891", 
+   "889308620178"]
+}
+
+###
+// Catalog items info by list of sku
+POST {{domain}}/catalog-items/sku
+Content-Type: application/json
+
+{ 
+   "store": "AZN-SBS",
+   "ids": ["UAR_1293901-410-L", "LA-UAR-APP-13-TT15", "TFC_10415-O/S", "889556891733", "889556890835", "SFBA-889556809868", 
+   "SFBA-889556754564"],
+   "includedData": ["salesRanks", "productTypes", "relationships"]
+   
+}
+
+

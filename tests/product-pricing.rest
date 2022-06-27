@@ -1,0 +1,92 @@
+@domain=http://localhost:3000
+//@domain=https://g3tools-api.herokuapp.com
+//@accessToken = {{login.response.body.auth.accessToken}}
+
+###
+// Default route
+# @name default
+GET {{domain}}/
+
+###
+// Product pricing get item offers: Test with empty body (no items)
+POST {{domain}}/product-pricing
+
+###
+// Pricing info with list of asins
+POST {{domain}}/product-pricing
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+    "idType": "ASIN",
+   "ids": ["B07BHVV7NQ", "B07G3H118Z", "B07BKQ2XC3", "B07FLNTGLK", "B07BHW2QHX", 
+   "B08FCV3XY7", "B01MTXZ7AI", "B07T27HVMN", "B072KSL4N2", "B071FBH7GQ", "B07235Y6FH", "B015K64X4C", "B00VF33E7M",
+    "B0815V6L2K", "B0815RH1GS", "B07TS8MM7V", "B07TGX1J8Y", "B07MKRRMFS", "B07MNZXL7T", "B075RSKC9Y"]
+}
+
+###
+// Pricing info with single asin (just offers if any)
+POST {{domain}}/product-pricing/pricing
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+    "idType": "Asin",
+   "ids": ["B07BHVV7NQ"]
+}
+
+###
+// Pricing info with single asin (just offers if any)
+POST {{domain}}/product-pricing/pricing
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+    "idType": "Sku",
+   "ids": ["UAR_1293901-410-L"]
+}
+
+###
+// Competitive pricing info with single asin
+POST {{domain}}/product-pricing/competitive-pricing
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+    "idType": "Asin",
+   "ids": ["B07BHVV7NQ"]
+}
+
+###
+// Competitive pricing info with single asin
+POST {{domain}}/product-pricing/competitive-pricing
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+    "idType": "Sku",
+   "ids": ["UAR_1293901-410-L"]
+}
+
+###
+// Lowest offers for a single asin
+POST {{domain}}/product-pricing/item-offers
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+    "itemCondition": "New",
+   "ids": ["B07TGX1J8Y"]
+}
+
+###
+// Lowest offers for a single sku
+POST {{domain}}/product-pricing/listing-offers
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+    "itemCondition": "New",
+   "ids": ["UAR_1293901-410-L"]
+}
+

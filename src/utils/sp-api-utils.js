@@ -1,16 +1,16 @@
 const SellingPartnerAPI = require("amazon-sp-api");
 const config = require("../../config");
-const stringUtils = require("../utils/string-utils");
-const fileUtils = require("../utils/file-utils");
+const stringUtils = require("./string-utils");
+const fileUtils = require("./file-utils");
 
 function getSellingPartner(props) {
   const { store, endpointVersions } = props;
   // Get store creds from config file
-  const storeConfig = config.stores.find((x) => x.store === store.store);
+  const storeConfig = config.stores.find((x) => x.store === store);
   if (!storeConfig) {
     throw new Error(`Store ${store} not found in config file.`);
   }
-  const marketplaceIds = storeConfig.MARKETPLACE_IDS;
+  const marketplaceIds = storeConfig.MARKETPLACE_ID;
   const sellerId = storeConfig.SELLER_ID;
 
   // Get sp-api creds

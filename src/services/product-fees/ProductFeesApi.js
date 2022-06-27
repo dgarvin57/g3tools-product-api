@@ -14,7 +14,7 @@ const dateUtils = require("../../utils/date-utils");
 //   "v0": {}
 // },
 
-// Input model for single item (asin or seller sku):
+// Input model (ids) expected for single item (asin or seller sku):
 // {
 //     "MarketplaceId": "ATVPDKIKX0DER",
 //     "IsAmazonFulfilled": true,
@@ -25,7 +25,7 @@ const dateUtils = require("../../utils/date-utils");
 //     "Identifier": "B08C78Q6CB"
 // }
 //
-// Input model for a list of items:
+// Input model (ids) expected for a list of items:
 // [
 //   {
 //     "MarketplaceId": "ATVPDKIKX0DER",
@@ -39,6 +39,13 @@ const dateUtils = require("../../utils/date-utils");
 //   },
 // ]
 
+/**
+ * Class to get product fee information from Amazon's SP-API
+ * @param  {String} idType  Valid options: ASIN, SellerSKU. Required
+ * @param  {Object} ids     Array of items to check. Required
+ * @param  {String} store   Store to use in checking fees. Optional (defaults to first store in config)
+ * @return {JSON}           All fees associated with passed in items.
+ */
 module.exports = class ProductFeesApi {
   constructor(props) {
     const { idType, ids, store } = props;
@@ -86,7 +93,7 @@ module.exports = class ProductFeesApi {
   async initialize() {
     // Get selling partner and marketplace ids from config for this store
     const spObj = spUtils.getSellingPartner({
-      store: this.store,
+      store: this.store.store,
       endpointVersions: { productFees: "v0" },
     });
     this.marketplaceIds = spObj.marketplaceIds;
@@ -100,26 +107,57 @@ module.exports = class ProductFeesApi {
     // fileUtils.deleteFiles(path);
   }
 
-  // Main loop: Download product fees (keep calling if nextToken exists)
+  /**
+   * Entry point into class methods. Retrieve restrictions data from SP-API
+   * @returns Writes data out to files in filesystem
+   */
   async getProductFees() {
+    let tryCount = config.app.maxErrorRetryCount;
+    let errCount = 1;
+    do {
+      try {
+        const res = await this.getProductFeesHelper();
+        return res;
+        return;
+      } catch (err) {
+        if (errCount < tryCount) {
+          log.error(
+            `Error getting product fees data. Holding for ${config.app.waitTimeBetweenErrors} seconds before trying again (${errCount} of ${tryCount}). ${err}`
+          );
+          await dateUtils.sleep(config.app.waitTimeBetweenErrors * 1000);
+          errCount++;
+        } else {
+          // Too many errors
+          log.error(
+            `Error getting product fees data. Try ${errCount} of ${tryCount}. ${err}`
+          );
+          throw new Error(err);
+        }
+      }
+    } while (1 === 1);
+    return;
+  }
+
+  // Main loop: Download product fees (keep calling if nextToken exists)
+  async getProductFeesHelper() {
     const parms = config.productFees;
-    let result = [];
+    let results = [];
     log.info(`Downloading ${this.type} from Amazon store: ${this.store}`);
     let counter = 1;
     do {
-      // Download from MWS
+      // Download from SP-API until done
       const response = await this.getMyFeesEstimates();
       this.nextToken = response?.NextToken || undefined;
       // Save response
-      result = [...result, ...response];
+      results = [...results, ...response];
       // Pause
       await dateUtils.sleep(parms.waitTimeBetweenApiCalls * 1000);
       // If not more data, return
-      if (!this.nextToken) return result;
+      if (!this.nextToken) return results;
       counter++;
     } while (this.nextToken);
     // Fallback return
-    return result;
+    return results;
   }
 
   // ***************************************

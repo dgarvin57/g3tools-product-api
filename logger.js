@@ -1,5 +1,6 @@
 const log4js = require("log4js");
-const level = process.env.NODE_LOGGING_LEVEL || "info";
+const config = require("./config");
+const level = config.app.nodeLoggingLevel || "info";
 
 const logger = (filename) => {
   return log4js.configure({

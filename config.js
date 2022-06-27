@@ -4,6 +4,9 @@ dotenv.config();
 const config = {
   app: {
     writeToPlatform: "filesystem", // filesystem Or s3
+    nodeLoggingLevel: "debug",
+    maxErrorRetryCount: 3,
+    waitTimeBetweenErrors: 3,
   },
   currEnv: process.env.NODE_ENV,
   port: process.env.PORT || 3000,
@@ -48,6 +51,17 @@ const config = {
   },
   productFees: {
     waitTimeBetweenApiCalls: 2,
+  },
+  catalogItems: {
+    catalogBatchSize: 20,
+    waitTimeBetweenApiCalls: 2,
+    maxItemsReturned: 100,
+  },
+  listingsRestrictions: {
+    restrictionsBatchSize: 5,
+  },
+  productPricing: {
+    productPricingBatchSize: 20,
   },
   listPerPage: 50,
   accessTokenSecret: process.env.ACCESS_TOKEN_SECRET,

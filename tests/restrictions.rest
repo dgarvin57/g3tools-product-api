@@ -1,0 +1,39 @@
+@domain=http://localhost:3000
+//@domain=https://g3tools-api.herokuapp.com
+//@accessToken = {{login.response.body.auth.accessToken}}
+
+###
+// Default route
+# @name default
+GET {{domain}}/
+
+###
+// Restrictions route: Test with empty body (no items)
+POST {{domain}}/restrictions
+
+###
+// Restrictions by asin
+# @name nextTokenTest
+POST {{domain}}/restrictions
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+   "asins": ["B01MTXZ7AI"],
+   "conditionType": "new_new"
+}
+
+###
+// Restrictions by asin list (max 5)
+# @name nextTokenTest
+POST {{domain}}/restrictions
+Content-Type: application/json
+
+{ 
+    "store": "AZN-LAP",
+   "asins": ["B07BHVV7NQ", "B07G3H118Z", "B07BKQ2XC3", "B07FLNTGLK", "B07BHW2QHX","B01MTXZ7AI","B07P5T8ZB2",
+      "B07HYHN948","B07PWQFPV8","B076BW6FPH"]
+}
+// ["B07BHVV7NQ", "B07G3H118Z", "B07BKQ2XC3", "B07FLNTGLK", "B07BHW2QHX"],
+// ["B01MTXZ7AI"]        //,"B076PXYRC6"]
+

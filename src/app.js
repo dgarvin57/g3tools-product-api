@@ -5,12 +5,16 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
-const productFeesRoute = require("../src/routes/product-fees.route");
+const productFeesRoute = require("./routes/product-fees.route");
+const catalogItemsRoute = require("./routes/catalog-items.route");
+const restrictionsRoute = require("./routes/restrictions.route");
+const productPricingRoute = require("./routes/product-pricing.route");
 
 // **************************************************************************
 // Change log
 // 06/21/22: v00.01 - Initial create
 // 06/22/22: v00.02 - Finished product-fees endpoint
+// 06/27/22: Moved all code into g3tools-api new endpoints. Archiving this code.
 // **************************************************************************
 
 app.use(express.static(path.join(__dirname, "static")));
@@ -36,7 +40,10 @@ app.use(cookieParser());
 //app.options("*", cors());
 
 // Routes
+app.use("/restrictions", restrictionsRoute);
 app.use("/product-fees", productFeesRoute);
+app.use("/catalog-items", catalogItemsRoute);
+app.use("/product-pricing", productPricingRoute);
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {

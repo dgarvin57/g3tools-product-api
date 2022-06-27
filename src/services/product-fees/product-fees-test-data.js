@@ -18,13 +18,13 @@ const fileUtils = require("../../utils/file-utils");
 exports.createData = async () => {
   // Get data from db
   const sql = `SELECT 
-  CAST(CASE WHEN iss.fulfillment = 'FBA' THEN TRUE ELSE FALSE END AS SIGNED) AS \`IsAmazonFulfilled\`,
-  iss.price AS \`ListingPrice\`,
-  'USD' AS \`ListingPriceCurrencyCode\`,
-  0.00 AS \`Shipping\`,
-  'USD' AS \`ShippingCurrencyCode\`,
-  iss.amazon_asin AS \`Identifier\`,
-  'ASIN' AS \`IdType\`
+    CAST(CASE WHEN iss.fulfillment = 'FBA' THEN TRUE ELSE FALSE END AS SIGNED) AS \`IsAmazonFulfilled\`,
+    iss.price AS \`ListingPrice\`,
+    'USD' AS \`ListingPriceCurrencyCode\`,
+    0.00 AS \`Shipping\`,
+    'USD' AS \`ShippingCurrencyCode\`,
+    iss.amazon_asin AS \`Identifier\`,
+    'ASIN' AS \`IdType\`
   FROM g3tools.inventory_snapshot iss WHERE iss.qty_available > 0 ORDER BY id DESC LIMIT 20;
 `;
   const testData = await sqlUtils.queryAsync(sql);
